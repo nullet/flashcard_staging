@@ -1,31 +1,20 @@
 # Main file for 
 
-# module Parser
+module Parser
 
-
-
-# end
-
-
-
-	def load_cards
-		$array = []
-
-		File.open('flashcard_samples.txt', 'r').each do |line|
-			$array << line.chomp unless line.chomp.empty?
+	def load_cards(file)
+		parsed_data = []
+		File.open(file, 'r').each do |line|
+			parsed_data << line.chomp unless line.chomp.empty?
 		end
+		create_deck(parsed_data)
 	end
 
-load_cards
-# p $array
-# $array.delete_if { |item| item == "\n"}
-# p $array
-# $array.map! do |item|
-# 	if item != $array.last
-# 		item = item[0..-1]
-# 	else
-# 		item
-# 	end
-# end
+	def create_deck(array)
+	  array.each_slice(2) do |slice|
+    @deck_array << {definition: slice[0], answer: slice[1]}
+  end
+end
 
-puts $array
+
+deck = Deck.new('flashcard_samples.txt')
